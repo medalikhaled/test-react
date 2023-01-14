@@ -1,7 +1,8 @@
-import { Children, useEffect, useState } from "react";
+import { Children, useEffect, useRef, useState } from "react";
 import "./App.css";
 import { MarsPhotos, Photo } from "./types/nasa_mars";
 import GridView from "./components/GridView";
+import MyModal from "./components/Modal";
 
 // importing API_KEY, in vite uses "import.meta" as a wrapper to classic "process" node function
 const API_KEY = import.meta.env.VITE_NASA_API_KEY;
@@ -32,11 +33,12 @@ function App() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4 px-4">
-      {/* <p className="px-4">{JSON.stringify(marsPhotos)}</p> */}
-      <h1 className=" block text-8xl text-red-500">Hello</h1>
-      <GridView data={marsPhotos}></GridView>
-    </div>
+    <>
+      <div className="flex flex-col items-center justify-center gap-4 px-4">
+        <h1 className=" block text-8xl text-[#e63462]">Mars Photos</h1>
+        <GridView data={marsPhotos}></GridView>
+      </div>
+    </>
   );
 }
 
