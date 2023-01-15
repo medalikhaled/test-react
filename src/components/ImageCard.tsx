@@ -1,19 +1,26 @@
 import React, { useRef, useState } from "react";
 import { Photo } from "../types/nasa_mars";
-import MyModal from "../components/Modal";
+import { newPhoto } from "./GridView";
 
-export default function ImageCard({ photo }: { photo: Photo }) {
-  const [isShown, isShownSet] = useState<Boolean>(false);
-
-  const buttonRef = useRef(null);
-
+export default function ImageCard({
+  photo,
+  buttonRef,
+  setIsOpen,
+  currentImageSet,
+}: {
+  photo: newPhoto;
+  buttonRef: any;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  currentImageSet: React.Dispatch<React.SetStateAction<newPhoto | undefined>>;
+}) {
   const openModalFunction = () => {
-    console.log("Open Modal");
-    isShownSet((prev) => !prev);
-    // TODO: Add Open Modal Functionality
+    setIsOpen((prev) => !prev);
+    currentImageSet(photo);
   };
 
-  // TODO: Add Image Lazy Loading & Animation (Intersection Observer)
+  // TODO: Add Image Lazy Loading & Animation Using Framer Motion (Intersection Observer)
+
+  // * We Can Use the React Ref & Portal Instead, but I don't like refs I believe they break the rules in a convoluted way
 
   return (
     <div
@@ -27,13 +34,8 @@ export default function ImageCard({ photo }: { photo: Photo }) {
         alt="Image of Mars"
         aria-label="Part of An official collection of Mars Photos captured by NASA"
       />
-      {isShown && <MockModal />}
+
+      <h6 className="">Date: {photo.earth_date}</h6>
     </div>
   );
 }
-
-const MockModal = () => {
-  return (
-    <div className="h-10 w-10 rounded-md bg-[#e63462] p-24">Hello MY LOVE</div>
-  );
-};

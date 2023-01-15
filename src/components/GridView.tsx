@@ -1,40 +1,58 @@
 import { Photo } from "../types/nasa_mars";
 import ImageCard from "./ImageCard";
 import { useState } from "react";
+import MyModal from "../components/Modal";
+
+export interface newPhoto extends Photo {
+  index: number;
+}
 
 export default function GridView({
   children, //Optional
   data,
+  buttonRef,
 }: {
   children?: React.ReactNode;
-  data: Photo[] | undefined;
+  data: Photo[];
+  buttonRef: any;
 }) {
-  const [tiles, tilesSet] = useState<string>("5");
+  //const [tiles, tilesSet] = useState<string>("3");
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentImage, currentImageSet] = useState<newPhoto>();
+
+  // Mapping the data to add an index to each photo
+  const mappedImages = data.map((image, index) => {
+    return {
+      ...image,
+      index,
+    };
+  });
+
+  //TODO: Prevent Layout Shifts by setting a min size for the man component and Loading state, use the React Suspend too
 
   return (
-    <>
-      {/* TODO : Change this to a HeadlessUI ListBox component with customs styles */}
-      <div>
-        <h5 className="text-xs text-green-600">
-          Number of Components per Line
-        </h5>
-        <select
-          className="mx-auto"
-          onChange={(e) => tilesSet(e.target.value)}
-          onBlur={(e) => tilesSet(e.target.value)}
-        >
-          <option value={5}>5</option>
-          <option value={3}>3</option>
-          <option value={2}>2</option>
-        </select>
-      </div>
+    <main
+      className={`mx-16 grid grid-cols-2 place-content-center gap-4 md:grid-cols-3`}
+    >
+      {mappedImages?.map((photo: newPhoto) => (
+        <ImageCard
+          key={photo.id}
+          photo={photo}
+          setIsOpen={setIsOpen}
+          buttonRef={buttonRef}
+          currentImageSet={currentImageSet}
+        />
+      ))}
 
-      {/* Prevent Layout Shift by setting a min size for the man component and Loading state, use the suspend too */}
-      <main className={`mx-8 grid ${"grid-cols-" + tiles} gap-4`}>
-        {data?.map((photo: Photo) => (
-          <ImageCard key={photo.id} photo={photo} />
-        ))}
-      </main>
-    </>
+      {currentImage && (
+        <MyModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          allImages={mappedImages}
+          currentImage={currentImage}
+          currentImageSet={currentImageSet}
+        />
+      )}
+    </main>
   );
 }
