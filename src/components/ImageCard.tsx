@@ -1,5 +1,4 @@
-import React, { useRef, useState } from "react";
-import { Photo } from "../types/nasa_mars";
+import React from "react";
 import { newPhoto } from "./GridView";
 
 export default function ImageCard({
