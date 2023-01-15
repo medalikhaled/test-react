@@ -45,7 +45,7 @@ function App() {
   const buttonRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="flex	w-full min-w-full flex-col items-center justify-center overflow-hidden">
+    <div className="flex	w-full min-w-[90vw] flex-col items-center justify-center overflow-hidden">
       <header className="py-2">
         <h1 className="block bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-2xl  font-extrabold  text-transparent md:text-8xl">
           Mars Photos

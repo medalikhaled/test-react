@@ -31,7 +31,9 @@ export default function GridView({
   //TODO: Prevent Layout Shifts by setting a min size for the man component and Loading state, use the React Suspend too
 
   return (
-    <main className={`mx-16 grid grid-cols-2 gap-4 md:grid-cols-3`}>
+    <main
+      className={`mx-12 grid grid-cols-2 place-content-center gap-4 md:grid-cols-3`}
+    >
       {mappedImages?.map((photo: newPhoto) => (
         <ImageCard
           key={photo.id}
